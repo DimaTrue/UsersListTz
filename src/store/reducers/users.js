@@ -16,7 +16,7 @@ export default function(state = initialState, action) {
     case GET_USERS_SUCCESS:
       return {
         ...state,
-        usersList: action.payload,
+        usersList: action.payload.results,
         isLoading: false,
       };
 
