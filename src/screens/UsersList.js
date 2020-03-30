@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import { View, Text, FlatList, YellowBox } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getUsersListInit } from 'store/reducers/users';
+import { getUsersListInit, filterUsers } from 'store/reducers/users';
 import UserItem from 'components/UserItem';
+import Header from 'components/Header';
 
 YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps']);
 
 const UsersList = () => {
   const isLoading = useSelector(state => state.users.isLoading);
-  const users = useSelector(state => state.users.usersList);
+  const users = useSelector(state => state.users.filteredUsersList);
   const error = useSelector(state => state.users.error);
 
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ const UsersList = () => {
 
   const keyExtractor = ({ login }) => login.md5;
 
+  const filteringUsers = text => dispatch(filterUsers(text.toLowerCase()));
+
   if (isLoading) {
     return (
       <View>
@@ -49,7 +52,7 @@ const UsersList = () => {
 
   return (
     <View>
-      <Text>UsersList</Text>
+      <Header filteringUsers={filteringUsers} />
       <FlatList
         initialNumToRender={20}
         horizontal={false}
