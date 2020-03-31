@@ -2,9 +2,14 @@ import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, ListItem, Avatar } from 'react-native-material-ui';
 
-const UserItem = React.memo(({ firstname, lastname, id, avatar }) => {
-  const userAvatar = avatar?.length ? (
-    <Avatar image={<Image style={styles.avatar} source={{ uri: avatar }} />} />
+const UserItem = React.memo(props => {
+  const { name, id, picture, navigation } = props;
+  const userAvatar = picture?.thumbnail?.length ? (
+    <Avatar
+      image={
+        <Image style={styles.avatar} source={{ uri: picture?.thumbnail }} />
+      }
+    />
   ) : (
     <Avatar text="JM" />
   );
@@ -12,11 +17,11 @@ const UserItem = React.memo(({ firstname, lastname, id, avatar }) => {
   return (
     <View>
       <Card>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('UserDetails')}>
           <ListItem
             leftElement={userAvatar}
             centerElement={{
-              primaryText: `${firstname} ${lastname}`,
+              primaryText: `${name?.first} ${name?.last}`,
               secondaryText: `${id?.name} ${id?.value}`,
             }}
           />

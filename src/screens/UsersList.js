@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, FlatList, YellowBox } from 'react-native';
+import { View, Text, FlatList, YellowBox, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getUsersListInit, filterUsers } from 'store/reducers/users';
@@ -8,7 +8,7 @@ import Header from 'components/Header';
 
 YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps']);
 
-const UsersList = () => {
+const UsersList = ({ navigation }) => {
   const isLoading = useSelector(state => state.users.isLoading);
   const users = useSelector(state => state.users.filteredUsersList);
   const error = useSelector(state => state.users.error);
@@ -22,12 +22,7 @@ const UsersList = () => {
   }, [dispatch]);
 
   const renderItem = ({ item }) => (
-    <UserItem
-      firstname={item.name?.first}
-      lastname={item.name?.last}
-      id={item?.id}
-      avatar={item?.picture?.thumbnail}
-    />
+    <UserItem {...item} navigation={navigation} />
   );
 
   const keyExtractor = ({ login }) => login.md5;
@@ -51,7 +46,7 @@ const UsersList = () => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <Header filteringUsers={filteringUsers} />
       <FlatList
         initialNumToRender={20}
@@ -60,7 +55,7 @@ const UsersList = () => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
