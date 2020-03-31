@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, ListItem, Avatar } from 'react-native-material-ui';
+import { useDispatch } from 'react-redux';
+
+import { getCurrentUserDetails } from 'store/reducers/users';
 
 const UserItem = React.memo(props => {
   const { name, id, picture, navigation } = props;
+  const dispatch = useDispatch();
   const userAvatar = picture?.thumbnail?.length ? (
     <Avatar
       image={
@@ -11,13 +15,17 @@ const UserItem = React.memo(props => {
       }
     />
   ) : (
-    <Avatar text="JM" />
+    <Avatar icon="person" />
   );
 
   return (
     <View>
       <Card>
-        <TouchableOpacity onPress={() => navigation.navigate('UserDetails')}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(getCurrentUserDetails(props));
+            navigation.navigate('UserDetails');
+          }}>
           <ListItem
             leftElement={userAvatar}
             centerElement={{

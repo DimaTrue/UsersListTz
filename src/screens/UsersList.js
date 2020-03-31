@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { View, Text, FlatList, YellowBox, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  YellowBox,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getUsersListInit, filterUsers } from 'store/reducers/users';
@@ -54,9 +61,16 @@ const UsersList = ({ navigation }) => {
         data={users}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        ListFooterComponent={<View style={styles.footer} />}
       />
     </SafeAreaView>
   );
 };
 
 export default UsersList;
+
+const styles = StyleSheet.create({
+  footer: {
+    height: 70,
+  },
+});

@@ -2,12 +2,14 @@ export const GET_USERS_INIT = 'GET_USERS_INIT';
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
 export const GET_USERS_FAILURE = 'GET_USERS_FAILURE';
 export const FILTER_USERS = 'FILTER_USERS';
+export const GET_CURRENT_USER_DETAILS = 'GET_CURRENT_USER_DETAILS';
 
 const initialState = {
   isLoading: false,
   usersList: [],
   error: '',
   filteredUsersList: [],
+  userDetails: {},
 };
 
 export default function(state = initialState, action) {
@@ -36,6 +38,9 @@ export default function(state = initialState, action) {
         ),
       };
 
+    case GET_CURRENT_USER_DETAILS:
+      return { ...state, userDetails: action.payload };
+
     default:
       return state;
   }
@@ -58,4 +63,9 @@ export const getUsersListFailure = error => ({
 export const filterUsers = text => ({
   type: FILTER_USERS,
   payload: text,
+});
+
+export const getCurrentUserDetails = userData => ({
+  type: GET_CURRENT_USER_DETAILS,
+  payload: userData,
 });
