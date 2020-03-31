@@ -6,6 +6,7 @@ import {
   YellowBox,
   SafeAreaView,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -38,16 +39,17 @@ const UsersList = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>LOADING...</Text>
+        <ActivityIndicator />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View>
-        <Text>Error</Text>
+      <View style={styles.container}>
+        <Text>Sorry, Something went wrong</Text>
       </View>
     );
   }
@@ -70,6 +72,11 @@ const UsersList = ({ navigation }) => {
 export default UsersList;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   footer: {
     height: 70,
   },
