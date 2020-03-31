@@ -34,7 +34,9 @@ const UserDetails = () => {
         <Card>
           <View style={styles.textBlock}>
             <Text style={styles.text}>BIRTHDAY:</Text>
-            <Text style={styles.text}>{userDetails.dob.date}</Text>
+            <Text style={styles.text}>
+              {new Date(userDetails.dob.date).toLocaleDateString()}
+            </Text>
           </View>
         </Card>
         <Card>
